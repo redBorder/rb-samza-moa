@@ -22,7 +22,7 @@ import weka.core.Instances;
 
 import java.util.*;
 
-public class AnomalyDetection implements StreamTask, InitableTask /*, WindowableTask */{
+public class AnomalyDetectionTask implements StreamTask, InitableTask /*, WindowableTask */{
 
     private final double EPSILON = 0.1;
 
@@ -34,7 +34,7 @@ public class AnomalyDetection implements StreamTask, InitableTask /*, Windowable
     /**
      * Con este objeto podremos hacer loggin y seguir las acciones del programa
      */
-    private static final Logger log = LoggerFactory.getLogger(AnomalyDetection.class);
+    private static final Logger log = LoggerFactory.getLogger(AnomalyDetectionTask.class);
 
     /**
      * Con este objeto podremos asociar los flujos que recibe el detector con el conjunto de datos que utilizará
@@ -466,6 +466,9 @@ public class AnomalyDetection implements StreamTask, InitableTask /*, Windowable
                 // Una vez alcanzado el tamaño del dataset
                 if(datasetActual.size() % 1000 == 0) {
                     log.info("Se han llegado a las 1000 instancias");
+
+
+
                     // Obtenemos todos los outliers detectados
                     for (int k = 0; k < detector.getOutliersResult().size(); k++) {
                         // Obtenemos la instancia anómala
@@ -480,6 +483,12 @@ public class AnomalyDetection implements StreamTask, InitableTask /*, Windowable
                         collector.send(new OutgoingMessageEnvelope(salidaSistema.get(flujoRecibido), _mapper.writeValueAsString(eventoAnomalo)));
 
                     }
+
+                    for(int l = 0; l < detector.getClusteringResult().size(); l++){
+                        SphereCluster sc = (SphereCluster) detector.getClusteringResult().get(l);
+                        log.info("Información del clúster : " + sc.getInfo() );
+                    }
+
                 }
                 // Obtenemos las estadísticas
                 log.info(detector.getStatistics());

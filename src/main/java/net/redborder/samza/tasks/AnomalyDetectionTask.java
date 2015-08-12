@@ -29,7 +29,7 @@ public class AnomalyDetectionTask implements StreamTask, InitableTask /*, Window
     /**
      * Con este objeto podremos establecer un flujo hacia el topic de kafka "logMOA"
      */
-    private static final SystemStream OUTPUT_STREAM = new SystemStream("kafka", "logMOA");
+//    private static final SystemStream OUTPUT_STREAM = new SystemStream("kafka", "logMOA");
 
     /**
      * Con este objeto podremos hacer loggin y seguir las acciones del programa
@@ -374,7 +374,7 @@ public class AnomalyDetectionTask implements StreamTask, InitableTask /*, Window
         log.info("Se ha recibido un nuevo mensaje del flujo : " + flujoRecibido);
 
         // Comprobamos si el mensaje que hemos recibido es de configuración, de ser así
-        if(flujoRecibido.equals("confMOA")){
+        if(flujoRecibido.equals("rb_moa_conf")){
             log.info("Se va a proceder a aplicar una nueva configuración");
 
             // Aplicamos la nueva configuración
@@ -496,7 +496,7 @@ public class AnomalyDetectionTask implements StreamTask, InitableTask /*, Window
             }
 
         }else{
-            log.info("El flujo \"" + flujoRecibido + "\" no será tratado por no está especificado en la configuración");
+            log.info("El flujo \"" + flujoRecibido + "\" no será tratado por no estar especificado en la configuración");
         }
 
     }

@@ -54,7 +54,7 @@
                 <include>org.apache.samza:samza-log4j</include>
                 <include>org.apache.samza:samza-api</include>
                 <include>net.redborder:rb-samza-moa</include>
-                <!--<include>org.slf4j:slf4j-log4j12</include>-->
+                <include>org.slf4j:slf4j-log4j12</include>
                 <include>org.apache.kafka:kafka_2.10</include>
                 <include>org.codehaus.jackson:jackson-mapper-asl</include>
                 <include>nz.ac.waikato.cms.moa:moa</include>

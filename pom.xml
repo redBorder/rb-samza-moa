@@ -20,7 +20,7 @@ under the License.
 
     <groupId>net.redborder</groupId>
     <artifactId>rb-samza-moa</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
@@ -116,7 +116,7 @@ under the License.
 
     <scm>
         <developerConnection>scm:git:git@gitlab.redborder.lan:bigdata/rb-samza-moa.git</developerConnection>
-        <tag>rb-samza-moa-0.0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
 

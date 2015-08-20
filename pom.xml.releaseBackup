@@ -15,13 +15,12 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.redborder</groupId>
     <artifactId>rb-samza-moa</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
@@ -104,6 +103,13 @@ under the License.
             <groupId>nz.ac.waikato.cms.moa</groupId>
             <artifactId>moa</artifactId>
             <version>2014.04</version>
+        </dependency>
+
+        <!-- {S}calable {A}dvanced {M}assive {O}nline {A}nalysis-->
+        <dependency>
+            <groupId>org.apache.samoa</groupId>
+            <artifactId>samoa-samza</artifactId>
+            <version>0.3.0-incubating</version>
         </dependency>
 
     </dependencies>

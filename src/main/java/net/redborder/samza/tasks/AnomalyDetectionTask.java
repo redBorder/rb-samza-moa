@@ -97,6 +97,8 @@ public class AnomalyDetectionTask implements StreamTask, InitableTask /*, Window
         // Comprobamos si el mensaje que hemos recibido es de configuracion, de ser asi
         if(instanciasFlujo.containsKey(flujoRecibido)) {  // En caso contrario aplicamos el algoritmo al evento que se obtenga si se ha creado previamente
 
+
+
             // Con este objeto podremos obtener el JSON parseado y manipularlo de forma mas comoda
             // Creamos un mapeo de clave/valor para el evento que obtenemos del mensaje
             // Basicamente lo que estamos haciendo es coger nuestro JSON y hacerle un mapeado para que de esa manera
@@ -205,7 +207,6 @@ public class AnomalyDetectionTask implements StreamTask, InitableTask /*, Window
         return octetos;
 
     }
-
 
     @SuppressWarnings("unchecked")
     @Override

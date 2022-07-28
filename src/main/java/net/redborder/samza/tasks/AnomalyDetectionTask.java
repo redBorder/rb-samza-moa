@@ -6,13 +6,16 @@ import moa.cluster.Cluster;
 import moa.cluster.Clustering;
 import moa.cluster.SphereCluster;
 import moa.clusterers.outliers.MCOD.MCOD;
+import moa.clusterers.outliers.MyBaseOutlierDetector;
 import moa.gui.visualization.DataPoint;
 import org.apache.samza.config.Config;
 import org.apache.samza.system.IncomingMessageEnvelope;
+import org.apache.samza.system.OutgoingMessageEnvelope;
 import org.apache.samza.system.SystemStream;
 import org.apache.samza.task.*;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import weka.core.Attribute;
@@ -24,6 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AnomalyDetectionTask implements StreamTask, InitableTask /*, WindowableTask */{
+    private static final SystemStream OUTPUT_STREAM = new SystemStream("kafka", "rb_flow_post_moa");
 
     /**
      * Con este objeto podremos hacer loggin y seguir las acciones del programa
@@ -175,6 +179,27 @@ public class AnomalyDetectionTask implements StreamTask, InitableTask /*, Window
 
                             // Obtenemos las estadisticas
                             log.info(detector.getStatistics());
+
+                            // Comprobamos si hemos detectado anomalías
+                            if(!detector.getOutliersResult().isEmpty()){
+                                // Para cada outlier
+                                for(MyBaseOutlierDetector.Outlier o : detector.getOutliersResult()){
+                                    // Obtenemos su instancia de referencia
+                                    RBInstance instanciaAnomala = (RBInstance)o.inst;
+
+                                    // Obtenemos el JSON del evento de la instancia
+                                    Map<String, String> json = _mapper.readValue(instanciaAnomala.getEvent(), new TypeReference<HashMap<String, String>>(){});
+                                    // Enriquecemos con el nuevo campo
+
+                                    json.put("outlier",instanciaAnomala.classAttribute().value(0));
+
+                                    //log.info("Detected outlier in event : \n" +_mapper.writeValueAsString(json));
+
+                                    // Lo enviamos al sistema
+                                    collector.send(new OutgoingMessageEnvelope(OUTPUT_STREAM, json));
+
+                                }
+                            }
 
                             datasetActualMOA.clear();
 
